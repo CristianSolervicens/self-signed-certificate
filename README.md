@@ -9,9 +9,11 @@ For Clients it creates:
 * ./ca-name/ca-name.ClientName.pfx (certificat)
 * ./ca.name/ca-name.ClientName.thumb (thumbprint or sha1 digest)
 
-With the _*.thumb*_ file content you can *revoke* easily client certificates in Azure Portal
+With the _**.thumb**_ file content you can *revoke* easily client certificates in Azure Portal
 
 Based on https://gist.github.com/arehmandev/63dc3e076c7837f79ec78b897133f5b8
+
+ **Dependencies:** pip install pyOpenSSL
 
 ***
 * Author: Cristian Solervicéns
