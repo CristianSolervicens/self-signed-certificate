@@ -271,6 +271,12 @@ def create_user_cert(ca, usuario):
     with open(f'{ca}/{file_name}.generic', '+ab') as fh:
         fh.write(cacertdump)
 
+    ovpn = "%s<ca>\n%s</ca>\n<cert>\n%s</cert>\n<key>\n%s</key>\n" % (ca, cacertdump, clientcert, clientkey)
+
+    # Write our file.
+    with open(f'{ca}/{file_name}.ovf', 'w') as f:
+        f.write(ovpn)
+
     return f'{file_name}.pfx'
 
 
