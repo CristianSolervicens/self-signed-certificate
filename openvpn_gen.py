@@ -239,6 +239,7 @@ def create_user_cert(ca, usuario):
     # create a .ovpn file and then dump it somewhere.
     # clientkey = dump_file_in_mem(key)
     clientcert = dump_file_in_mem(crt)
+    clientkey = dump_file_in_mem(key)
     cacertdump = dump_file_in_mem(cacert)
 
     pfx = crypto.PKCS12()
@@ -256,6 +257,19 @@ def create_user_cert(ca, usuario):
 
     with open(f'{ca}/{file_name}.thumb', 'w') as fh:
         fh.write(thumb_print)
+
+    with open(f'{ca}/{file_name}.generic', 'w') as fh:
+        fh.writelines("Client-Cert")
+    with open(f'{ca}/{file_name}.generic', '+ab') as fh:
+        fh.write(clientcert)
+    with open(f'{ca}/{file_name}.generic', '+a') as fh:
+        fh.writelines("Client-Key")
+    with open(f'{ca}/{file_name}.generic', '+ab') as fh:
+        fh.write(clientkey)
+    with open(f'{ca}/{file_name}.generic', '+a') as fh:
+        fh.writelines("CA-Cert")
+    with open(f'{ca}/{file_name}.generic', '+ab') as fh:
+        fh.write(cacertdump)
 
     return f'{file_name}.pfx'
 
