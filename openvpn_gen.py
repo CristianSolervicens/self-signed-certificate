@@ -16,7 +16,7 @@ def find_files(path, patern, depth) -> list:
     if depth == 0:
         return found
 
-    path_x = f'{path}\\**'
+    path_x = f'{path}/**'
     for fo in glob(path_x, recursive=False):
         if os.path.isdir(fo):
             res = find_files(fo, patern, depth - 1)
