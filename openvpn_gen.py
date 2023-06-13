@@ -258,24 +258,11 @@ def create_user_cert(ca, usuario):
     with open(f'{ca}/{file_name}.thumb', 'w') as fh:
         fh.write(thumb_print)
 
-    with open(f'{ca}/{file_name}.generic', 'w') as fh:
-        fh.writelines("Client-Cert")
-    with open(f'{ca}/{file_name}.generic', '+ab') as fh:
-        fh.write(clientcert)
-    with open(f'{ca}/{file_name}.generic', '+a') as fh:
-        fh.writelines("Client-Key")
-    with open(f'{ca}/{file_name}.generic', '+ab') as fh:
-        fh.write(clientkey)
-    with open(f'{ca}/{file_name}.generic', '+a') as fh:
-        fh.writelines("CA-Cert")
-    with open(f'{ca}/{file_name}.generic', '+ab') as fh:
-        fh.write(cacertdump)
-
-    ovpn = "%s<ca>\n%s</ca>\n<cert>\n%s</cert>\n<key>\n%s</key>\n" % (ca, cacertdump, clientcert, clientkey)
-
-    # Write our file.
-    with open(f'{ca}/{file_name}.ovf', 'w') as f:
-        f.write(ovpn)
+    ovpn = f'{ca}<ca>\n{cacertdump.decode("ascii")}</ca>\n'
+    ovpn += f'<cert>\n{clientcert.decode("ascii")}</cert>\n'
+    ovpn += f'<key>\n{clientkey.decode("ascii")}</key>\n'
+    with open(f'{ca}/{file_name}.ovf', 'w') as fh:
+        fh.write(ovpn)
 
     return f'{file_name}.pfx'
 
